@@ -1,0 +1,350 @@
+{
+	"info": {
+		"_postman_id": "dc46a11c-b7a4-45db-a6fc-bbe45087119d",
+		"name": "Trello API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "/1/members/{id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Validar se o Status code é 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "x-api-key",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "5e38b4e4de1e5d4bd88e2b4b2bdd1942",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{trelloToken}}",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_base}}/1/members/63150c98921c2703a11918d0",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1",
+								"members",
+								"63150c98921c2703a11918d0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cartao",
+			"item": [
+				{
+					"name": "Criar um novo cartao",
+					"item": [
+						{
+							"name": "/1/cards",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"//Verificação do Status Code\r",
+											"pm.test(\"Verificar se o Status code é 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"//Verificação se o nome não esta vazio\r",
+											"pm.test(\"Verificar se o nome não esta vazio\", function () {\r",
+											"    pm.expect(pm.response.json().name).to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"//Verificação se o name é o mesmo que esta sendo enviado no body\r",
+											"pm.test(\"Verificar se o name é o mesmo que esta sendo enviado no body\", function () {\r",
+											"    pm.expect(pm.response.json().name).to.eq(\"teste1234\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Verificar se tempo de resposta é inferior a 500ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "x-api-key",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"teste1234\",    \r\n    \"idBoard\": \"63151c0fea9b41040061fa2d\",\r\n    \"idList\": \"63151c0fea9b41040061fa34\"   \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_base}}/1/cards?key={{trello_key}}&token={{trello_token}}",
+									"host": [
+										"{{url_base}}"
+									],
+									"path": [
+										"1",
+										"cards"
+									],
+									"query": [
+										{
+											"key": "key",
+											"value": "{{trello_key}}"
+										},
+										{
+											"key": "token",
+											"value": "{{trello_token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Atualizar cartao",
+					"item": [
+						{
+							"name": "/1/cards/{id}",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verificar se o Status code é 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "x-api-key",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"teste-editado056\",    \r\n    \"desc\":\"essa descrição também foi editado via REST API\",\r\n    \"idBoard\": \"63151c0fea9b41040061fa2d\",\r\n    \"idList\": \"63151c0fea9b41040061fa34\"   \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_base}}/1/cards/63167b5d4e270f039ca9d4fd?key={{trello_key}}&token={{trello_token}}",
+									"host": [
+										"{{url_base}}"
+									],
+									"path": [
+										"1",
+										"cards",
+										"63167b5d4e270f039ca9d4fd"
+									],
+									"query": [
+										{
+											"key": "key",
+											"value": "{{trello_key}}"
+										},
+										{
+											"key": "token",
+											"value": "{{trello_token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Deletar cartao",
+					"item": [
+						{
+							"name": "/1/cards/{id}",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Verificar se o Status code é 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "Key",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": "5e38b4e4de1e5d4bd88e2b4b2bdd1942",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{trelloToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_base}}/1/cards/63167bf535c1a3032a2458ba?key={{trello_key}}&token={{trello_token}}",
+									"host": [
+										"{{url_base}}"
+									],
+									"path": [
+										"1",
+										"cards",
+										"63167bf535c1a3032a2458ba"
+									],
+									"query": [
+										{
+											"key": "key",
+											"value": "{{trello_key}}"
+										},
+										{
+											"key": "token",
+											"value": "{{trello_token}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "cartaoId",
+			"value": ""
+		}
+	]
+}
